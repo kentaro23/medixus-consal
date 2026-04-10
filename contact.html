@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | medixus consulting</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .contact-info {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 24px;
+            height: fit-content;
+        }
+
+        .contact-info h2 {
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .info-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .info-item h3 {
+            color: var(--brand-accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            color: var(--text-color);
+            background-color: var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--brand-accent);
+            background-color: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .required-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background-color: #E74C3C;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 1024px) {
+            .contact-container { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header scrolled" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">medixus consulting</a>
+                <span class="logo-subtext">株式会社medixul 事業ページ</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">ホーム</a></li>
+                    <li><a href="services.html" class="nav-link">サービス</a></li>
+                    <li><a href="about.html" class="nav-link">会社概要</a></li>
+                    <li><a href="contact.html" class="nav-link active">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- ページタイトル -->
+        <section class="section" style="padding-top: 180px; text-align: center;">
+            <h1 class="section-title" style="font-size: 3.5rem;">お問い合わせ</h1>
+            <p class="section-subtitle">株式会社medixulの事業ブランド「medixus consulting」へのご相談、<br>各コースのお申し込み、資料請求はこちらからお問い合わせください。</p>
+        </section>
+
+        <section class="contact-container">
+            <!-- 左側：連絡先情報 -->
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <div class="info-item">
+                    <h3>メールアドレス</h3>
+                    <p>kentaro20040623@gmail.com</p>
+                </div>
+                <div class="info-item">
+                    <h3>運営</h3>
+                    <p>株式会社medixul<br>medixus consulting</p>
+                </div>
+                <div class="info-item">
+                    <h3>営業時間</h3>
+                    <p>平日 9:00 - 18:00<br>（土日祝日を除く）</p>
+                </div>
+                <div class="info-item">
+                    <h3>対応エリア</h3>
+                    <p>全国対応可能<br>（オンラインでの実施を基本としております）</p>
+                </div>
+                <div style="margin-top: 60px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 40px;">
+                    <p style="font-size: 0.9rem; opacity: 0.6; line-height: 1.6;">通常、お問い合わせから24時間以内（営業日）に担当者よりご連絡させていただきます。</p>
+                </div>
+            </div>
+
+            <!-- 右側：フォーム -->
+            <div class="contact-form-wrapper">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="company">貴社名<span class="required-badge">必須</span></label>
+                        <input type="text" id="company" name="company" placeholder="株式会社○○" required>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="name">お名前<span class="required-badge">必須</span></label>
+                            <input type="text" id="name" name="name" placeholder="山田 太郎" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">メールアドレス<span class="required-badge">必須</span></label>
+                            <input type="email" id="email" name="email" placeholder="example@medixus.co.jp" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employees">従業員数<span class="required-badge">必須</span></label>
+                        <select id="employees" name="employees" required>
+                            <option value="">選択してください</option>
+                            <option value="10-20">10〜20名</option>
+                            <option value="21-30">21〜30名</option>
+                            <option value="31-40">31〜40名</option>
+                            <option value="41-50">41〜50名</option>
+                            <option value="51-">51名以上</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interest">ご関心のあるコース<span class="required-badge">必須</span></label>
+                        <select id="interest" name="interest" required>
+                            <option value="">選択してください</option>
+                            <option value="starter">初級 AI Starter (基礎・日常業務活用)</option>
+                            <option value="practitioner">中級 AI Practitioner (自動化・データ処理)</option>
+                            <option value="expert">上級 AI Expert (RAG・自社システム構築)</option>
+                            <option value="undecided">未定・まずは相談したい</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">お問い合わせ内容<span class="required-badge">必須</span></label>
+                        <textarea id="message" name="message" placeholder="現在お抱えの課題や、具体的なご相談内容をご記入ください。" required></textarea>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 40px;">
+                        <label style="display: flex; align-items: center; font-weight: 400; cursor: pointer;">
+                            <input type="checkbox" required style="width: auto; margin-right: 15px;">
+                            <span><a href="#" style="color: var(--brand-accent); text-decoration: none;">プライバシーポリシー</a>に同意する</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 50px; text-align: right;">
+                        <button type="submit" class="btn btn-primary" style="padding: 1.2rem 5rem; font-size: 1.2rem;">送信する</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- よくある質問 (簡易版) -->
+        <section class="section" style="background-color: var(--light-gray); margin-top: 100px;">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">FAQ</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 30px; background: white; padding: 30px; border-radius: 16px;">
+                    <p style="font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">Q. 相談は無料ですか？</p>
+                    <p style="color: var(--text-light);">A. はい、初回の無料相談（約60分）は完全に無料です。貴社の課題をヒアリングし、最適なプランをご提案いたします。</p>
+                </div>
+                <div style="margin-bottom: 30px; background: white; padding: 30px; border-radius: 16px;">
+                    <p style="font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">Q. オンラインでの実施は可能ですか？</p>
+                    <p style="color: var(--text-light);">A. はい、全国対応可能で、基本的にはZoom等を用いたオンライン形式で実施しております。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">medixus consulting</div>
+                <p class="footer-desc">株式会社medixulの事業として展開する中小企業向けAI教育コンサルティング。貴社のデジタル変革を、専門家がゼロから伴走し、確かな成果へと導きます。</p>
+            </div>
+            <div>
+                <h4 class="footer-title">サービス</h4>
+                <ul class="footer-links">
+                    <li><a href="services.html#starter">AI Starter</a></li>
+                    <li><a href="services.html#practitioner">AI Practitioner</a></li>
+                    <li><a href="services.html#expert">AI Expert</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">企業情報</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">会社概要</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">お問い合わせ</h4>
+                <p class="footer-desc">kentaro20040623@gmail.com</p>
+                <p class="footer-desc" style="font-size: 0.9rem;">平日 9:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 medixul Inc. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

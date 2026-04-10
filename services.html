@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サービス | medixus consulting</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .service-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('assets/network-ultra-1.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .service-list-section {
+            padding: 100px 40px;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+
+        .service-item {
+            display: flex;
+            gap: 80px;
+            margin-bottom: 120px;
+            align-items: center;
+        }
+
+        .service-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .service-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .service-content {
+            flex: 1;
+        }
+
+        .service-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: var(--brand-accent);
+            color: white;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .curriculum-item {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--brand-accent);
+        }
+
+        .curriculum-item h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 1024px) {
+            .service-item { flex-direction: column; gap: 40px; }
+            .service-item.reverse { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header scrolled" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">medixus consulting</a>
+                <span class="logo-subtext">株式会社medixul 事業ページ</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">ホーム</a></li>
+                    <li><a href="services.html" class="nav-link active">サービス</a></li>
+                    <li><a href="about.html" class="nav-link">会社概要</a></li>
+                    <li><a href="contact.html" class="nav-link">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- サービスヒーロー -->
+        <section class="service-hero">
+            <div class="hero-content">
+                <h1 class="hero-title" style="font-size: 3.5rem;">サービス</h1>
+                <p class="hero-subtitle">株式会社medixulの事業ブランドとして提供する、段階的なAI教育プログラム</p>
+            </div>
+        </section>
+
+        <section class="service-list-section">
+            <!-- 初級 -->
+            <div class="service-item" id="starter">
+                <div class="service-image">
+                    <img src="assets/office-ultra-1.jpg" alt="AI Starter - High Quality Environment">
+                </div>
+                <div class="service-content">
+                    <span class="service-badge">基礎・日常業務活用</span>
+                    <h2 class="section-title">初級 AI Starter</h2>
+                    <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; line-height: 2;">
+                        AIに関する知識がほぼない方を対象とした、基礎固めのためのコースです。日常業務（Excel、メール、資料作成）で即座に活用できるスキルを習得し、AIへの心理的障壁を解消します。
+                    </p>
+                    <div class="curriculum-grid">
+                        <div class="curriculum-item">
+                            <h4>基礎・全体像</h4>
+                            <p>AIの仕組みと安全な使い方、ツール選定のポイント</p>
+                        </div>
+                        <div class="curriculum-item">
+                            <h4>実務活用</h4>
+                            <p>Excel・メール・資料作成での具体的なAI活用手法</p>
+                        </div>
+                        <div class="curriculum-item">
+                            <h4>ガバナンス</h4>
+                            <p>社内利用ルールの整備と情報セキュリティの基礎</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中級 -->
+            <div class="service-item reverse" id="practitioner">
+                <div class="service-image">
+                    <img src="assets/tech-ultra-1.jpg" alt="AI Practitioner - High Definition Data Flow">
+                </div>
+                <div class="service-content">
+                    <span class="service-badge">自動化・データ処理</span>
+                    <h2 class="section-title">中級 AI Practitioner</h2>
+                    <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; line-height: 2;">
+                        業務自動化やデータ処理の最適化を目指すコースです。ノーコードツールを活用し、AIを単なる道具から「自律的に働くシステム」へと進化させ、経営への報告体制も構築します。
+                    </p>
+                    <div class="curriculum-grid">
+                        <div class="curriculum-item">
+                            <h4>自動化設計</h4>
+                            <p>ZapierやMakeを活用した業務プロセスの自動化</p>
+                        </div>
+                        <div class="curriculum-item">
+                            <h4>データ分析</h4>
+                            <p>AIによる高度なデータ処理とスプレッドシート連携</p>
+                        </div>
+                        <div class="curriculum-item">
+                            <h4>効果測定</h4>
+                            <p>AI導入によるROI算出と経営層への報告体制</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 上級 -->
+            <div class="service-item" id="expert">
+                <div class="service-image">
+                    <img src="assets/network-ultra-1.jpg" alt="AI Expert - Ultra High Quality Connectivity">
+                </div>
+                <div class="service-content">
+                    <span class="service-badge">RAG・自社システム構築</span>
+                    <h2 class="section-title">上級 AI Expert</h2>
+                    <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; line-height: 2;">
+                        自社システムへのAI組み込みやRAG（Retrieval-Augmented Generation）システム構築など、高度なAI活用を実現するコースです。経営戦略レベルでのAI導入を技術面から強力に支援します。
+                    </p>
+                    <div class="curriculum-grid">
+                        <div class="curriculum-item">
+                            <h4>システム統合</h4>
+                            <p>API連携による自社システムへのAI組み込み設計</p>
+                        </div>
+                        <div class="curriculum-item">
+                            <h4>RAG構築</h4>
+                            <p>社内データを活用した独自ナレッジAIの設計・構築</p>
+                        </div>
+                        <div class="curriculum-item">
+                            <h4>戦略的導入</h4>
+                            <p>AI導入プロジェクトのマネジメントと経営戦略の統合</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA セクション -->
+        <section class="section" style="text-align: center; background-color: var(--light-gray);">
+            <h2 class="section-title">貴社に最適なプランを。</h2>
+            <p class="section-subtitle" style="margin-bottom: 3rem;">現状のヒアリングから、最適な教育プログラムを設計いたします。</p>
+            <a href="contact.html" class="btn btn-primary">無料相談のお申し込み</a>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">medixus consulting</div>
+                <p class="footer-desc">株式会社medixulの事業として展開する中小企業向けAI教育コンサルティング。貴社のデジタル変革を、専門家がゼロから伴走し、確かな成果へと導きます。</p>
+            </div>
+            <div>
+                <h4 class="footer-title">サービス</h4>
+                <ul class="footer-links">
+                    <li><a href="services.html#starter">AI Starter</a></li>
+                    <li><a href="services.html#practitioner">AI Practitioner</a></li>
+                    <li><a href="services.html#expert">AI Expert</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">企業情報</h4>
+                <ul class="footer-links">
+                    <li><a href="about.html">会社概要</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">お問い合わせ</h4>
+                <p class="footer-desc">kentaro20040623@gmail.com</p>
+                <p class="footer-desc" style="font-size: 0.9rem;">平日 9:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 medixul Inc. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
