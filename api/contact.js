@@ -6,6 +6,10 @@ function sanitize(value) {
   return String(value || "").replace(/[<>]/g, "").trim();
 }
 
+function sanitizeEnvEmail(value) {
+  return String(value || "").replace(/\n/g, "").replace(/\\\\n/g, "").trim();
+}
+
 function validateBody(body) {
   const company = sanitize(body.company);
   const name = sanitize(body.name);
@@ -34,8 +38,12 @@ function validateBody(body) {
 
 async function sendViaResend(payload) {
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL || "ohara.kentaro@medixus.co.jp";
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
+  const toEmail = sanitizeEnvEmail(
+    process.env.CONTACT_TO_EMAIL || "ohara.kentaro@medixus.co.jp"
+  );
+  const fromEmail = sanitizeEnvEmail(
+    process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev"
+  );
 
   if (!apiKey) {
     return { data: null, error: { message: "RESEND_API_KEY is not set" } };
