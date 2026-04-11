@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 const MAX_MESSAGE_LENGTH = 4000;
 
 function sanitize(value) {
@@ -30,14 +32,29 @@ function validateBody(body) {
   };
 }
 
-async function sendViaResend(payload) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error("RESEND_API_KEY is not set");
+async function sendViaGmail(payload) {
+  const smtpUser =
+    process.env.GMAIL_USER ||
+    process.env.CONTACT_FROM_EMAIL ||
+    "ohara.kentaro@medixus.co.jp";
+  const smtpPass = process.env.GMAIL_APP_PASSWORD;
+  const toEmail = process.env.CONTACT_TO_EMAIL || "ohara.kentaro@medixus.co.jp";
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
+
+  if (!smtpUser || !smtpPass) {
+    throw new Error("GMAIL_USER or GMAIL_APP_PASSWORD is not set");
   }
 
-  const toEmail = process.env.CONTACT_TO_EMAIL || "ohara.kentaro@medixus.co.jp";
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  });
+
   const subject = `【medixus consulting】新規お問い合わせ: ${payload.company} / ${payload.name}`;
 
   const text = [
@@ -67,29 +84,17 @@ async function sendViaResend(payload) {
     </div>
   `;
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      reply_to: payload.email,
-      subject,
-      text,
-      html,
-    }),
+  await transporter.sendMail({
+    from: `medixus consulting <${fromEmail}>`,
+    to: toEmail,
+    replyTo: payload.email,
+    subject,
+    text,
+    html,
   });
-
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Resend error: ${response.status} ${body}`);
-  }
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method Not Allowed" });
@@ -101,7 +106,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: validation.error });
     }
 
-    await sendViaResend(validation.payload);
+    await sendViaGmail(validation.payload);
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("[contact-api-error]", error);
