@@ -1,3 +1,5 @@
+const { Resend } = require("resend");
+
 const MAX_MESSAGE_LENGTH = 4000;
 
 function sanitize(value) {
@@ -36,9 +38,10 @@ async function sendViaResend(payload) {
   const fromEmail = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
 
   if (!apiKey) {
-    throw new Error("RESEND_API_KEY is not set");
+    return { data: null, error: { message: "RESEND_API_KEY is not set" } };
   }
 
+  const resend = new Resend(apiKey);
   const subject = `【medixus consulting】新規お問い合わせ: ${payload.company} / ${payload.name}`;
 
   const text = [
@@ -68,26 +71,14 @@ async function sendViaResend(payload) {
     </div>
   `;
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      reply_to: payload.email,
-      subject,
-      text,
-      html,
-    }),
+  return resend.emails.send({
+    from: fromEmail,
+    to: [toEmail],
+    replyTo: payload.email,
+    subject,
+    text,
+    html,
   });
-
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Resend error: ${response.status} ${body}`);
-  }
 }
 
 module.exports = async function handler(req, res) {
@@ -96,18 +87,18 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  try {
-    const validation = validateBody(req.body || {});
-    if (!validation.ok) {
-      return res.status(400).json({ error: validation.error });
-    }
+  const validation = validateBody(req.body || {});
+  if (!validation.ok) {
+    return res.status(400).json({ error: validation.error });
+  }
 
-    await sendViaResend(validation.payload);
-    return res.status(200).json({ ok: true });
-  } catch (error) {
+  const { data, error } = await sendViaResend(validation.payload);
+  if (error) {
     console.error("[contact-api-error]", error);
     return res.status(500).json({
       error: "送信に失敗しました。時間をおいて再度お試しください。",
     });
   }
+
+  return res.status(200).json({ ok: true, id: data?.id || null });
 }
