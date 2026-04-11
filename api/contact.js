@@ -36,7 +36,7 @@ async function sendViaResend(payload) {
     throw new Error("RESEND_API_KEY is not set");
   }
 
-  const toEmail = process.env.CONTACT_TO_EMAIL || "kentaro20040623@gmail.com";
+  const toEmail = process.env.CONTACT_TO_EMAIL || "ohara.kentaro@medixus.co.jp";
   const fromEmail = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
   const subject = `【medixus consulting】新規お問い合わせ: ${payload.company} / ${payload.name}`;
 
