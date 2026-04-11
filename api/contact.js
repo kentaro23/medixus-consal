@@ -1,5 +1,3 @@
-const nodemailer = require("nodemailer");
-
 const MAX_MESSAGE_LENGTH = 4000;
 
 function sanitize(value) {
@@ -32,28 +30,14 @@ function validateBody(body) {
   };
 }
 
-async function sendViaGmail(payload) {
-  const smtpUser =
-    process.env.GMAIL_USER ||
-    process.env.CONTACT_FROM_EMAIL ||
-    "ohara.kentaro@medixus.co.jp";
-  const smtpPass = process.env.GMAIL_APP_PASSWORD;
+async function sendViaResend(payload) {
+  const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL || "ohara.kentaro@medixus.co.jp";
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
 
-  if (!smtpUser || !smtpPass) {
-    throw new Error("GMAIL_USER or GMAIL_APP_PASSWORD is not set");
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not set");
   }
-
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
-  });
 
   const subject = `【medixus consulting】新規お問い合わせ: ${payload.company} / ${payload.name}`;
 
@@ -84,14 +68,26 @@ async function sendViaGmail(payload) {
     </div>
   `;
 
-  await transporter.sendMail({
-    from: `medixus consulting <${fromEmail}>`,
-    to: toEmail,
-    replyTo: payload.email,
-    subject,
-    text,
-    html,
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: fromEmail,
+      to: [toEmail],
+      reply_to: payload.email,
+      subject,
+      text,
+      html,
+    }),
   });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Resend error: ${response.status} ${body}`);
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -106,7 +102,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: validation.error });
     }
 
-    await sendViaGmail(validation.payload);
+    await sendViaResend(validation.payload);
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("[contact-api-error]", error);
