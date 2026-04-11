@@ -30,6 +30,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // モバイルナビの開閉制御
+    const nav = document.querySelector('.nav');
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const closeMobileNav = () => {
+        document.body.classList.remove('mobile-nav-open');
+        if (mobileNavToggle) {
+            mobileNavToggle.setAttribute('aria-expanded', 'false');
+        }
+    };
+
+    if (nav && mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', () => {
+            const isOpen = document.body.classList.toggle('mobile-nav-open');
+            mobileNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMobileNav);
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!document.body.classList.contains('mobile-nav-open')) return;
+            if (nav.contains(event.target)) return;
+            closeMobileNav();
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeMobileNav();
+            }
+        });
+    }
+
     // フェードインアニメーション (Intersection Observer)
     const observerOptions = {
         root: null,

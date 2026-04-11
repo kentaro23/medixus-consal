@@ -88,6 +88,17 @@
             .service-item { flex-direction: column; gap: 40px; }
             .service-item.reverse { flex-direction: column; }
         }
+
+        @media (max-width: 768px) {
+            .service-hero {
+                height: auto;
+                min-height: 54vh;
+                padding: 120px 20px 60px;
+            }
+            .service-list-section { padding: 70px 20px; }
+            .service-item { margin-bottom: 80px; }
+            .curriculum-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -99,6 +110,11 @@
                 <span class="logo-subtext">株式会社medixus 事業ページ</span>
             </div>
             <nav class="nav">
+                <button class="mobile-nav-toggle" type="button" aria-label="メニューを開く" aria-expanded="false">
+                    <span class="mobile-nav-toggle-bar"></span>
+                    <span class="mobile-nav-toggle-bar"></span>
+                    <span class="mobile-nav-toggle-bar"></span>
+                </button>
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link">ホーム</a></li>
                     <li><a href="services.html" class="nav-link active">サービス</a></li>

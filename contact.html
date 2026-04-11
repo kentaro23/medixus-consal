@@ -98,6 +98,11 @@
         @media (max-width: 1024px) {
             .contact-container { grid-template-columns: 1fr; gap: 40px; }
         }
+
+        @media (max-width: 768px) {
+            .contact-container { padding: 70px 20px; }
+            .contact-info { padding: 40px 24px; }
+        }
     </style>
 </head>
 <body>
@@ -109,6 +114,11 @@
                 <span class="logo-subtext">株式会社medixus 事業ページ</span>
             </div>
             <nav class="nav">
+                <button class="mobile-nav-toggle" type="button" aria-label="メニューを開く" aria-expanded="false">
+                    <span class="mobile-nav-toggle-bar"></span>
+                    <span class="mobile-nav-toggle-bar"></span>
+                    <span class="mobile-nav-toggle-bar"></span>
+                </button>
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link">ホーム</a></li>
                     <li><a href="services.html" class="nav-link">サービス</a></li>
@@ -159,7 +169,7 @@
                         <input type="text" id="company" name="company" placeholder="株式会社○○" required>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="contact-form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div class="form-group">
                             <label for="name">お名前<span class="required-badge">必須</span></label>
                             <input type="text" id="name" name="name" placeholder="山田 太郎" required>
@@ -205,7 +215,7 @@
                         </label>
                     </div>
 
-                    <div style="margin-top: 50px; text-align: right;">
+                    <div class="contact-submit" style="margin-top: 50px; text-align: right;">
                         <button type="submit" class="btn btn-primary" style="padding: 1.2rem 5rem; font-size: 1.2rem;">送信する</button>
                     </div>
                 </form>
