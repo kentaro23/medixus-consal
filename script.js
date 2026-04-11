@@ -56,10 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // フォーム送信（デモ用）
+    // フォーム送信
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = contactForm.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
@@ -67,13 +67,31 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.innerText = '送信中...';
             btn.disabled = true;
 
-            // 送信完了のシミュレーション
-            setTimeout(() => {
-                alert('お問い合わせをお受けいたしました。24時間以内に担当者よりご連絡させていただきます。');
+            try {
+                const formData = new FormData(contactForm);
+                const payload = Object.fromEntries(formData.entries());
+
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    throw new Error(result.error || '送信に失敗しました。');
+                }
+
+                alert('お問い合わせを受け付けました。24時間以内（営業日）に担当者よりご連絡いたします。');
                 contactForm.reset();
+            } catch (error) {
+                alert(error.message || '送信に失敗しました。時間をおいて再度お試しください。');
+            } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
-            }, 1500);
+            }
         });
     }
 });
